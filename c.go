@@ -34,47 +34,55 @@ func main() {
 		panic("второй операнд должен быть числом меншье 10, либо строкой меньше 10 символов")
 	}
 
+	result := stringCalc(operand1, operand2, sym)
+	if len(result) > 40 {
+		result = result[:40] + "..."
+		fmt.Printf("\"%s\"", result)
+	} else {
+		fmt.Printgit add .f("\"%s\"", result)
+	}
+
+}
+func stringCalc(operand1, operand2, sym string) string {
+	var result string // Объявляем result заранее
+
 	switch sym {
 	case "+":
-		sum := operand1 + operand2
-		fmt.Printf("\"%s\"", sum)
+		result = operand1 + operand2
 
 	case "-":
 		if strings.Contains(operand1, operand2) {
-			result := strings.ReplaceAll(operand1, operand2, "")
-			fmt.Printf("\"%s\"", result)
-
+			result = strings.ReplaceAll(operand1, operand2, "")
 		} else {
-			fmt.Printf("\"%s\"", operand1)
+			result = operand1
 		}
 
 	case "*":
 		num, err := strconv.Atoi(operand2)
-
-		if err == nil {
-			result := strings.Repeat(operand1, num)
-			fmt.Printf("\"%s\"", result)
-		} else {
-			panic("при умножении строки второй операнд должен быть числом")
+		if err != nil {
+			panic("Ошибка: при умножении строки второй операнд должен быть числом")
 		}
+		result = strings.Repeat(operand1, num)
 
 	case "/":
 		num, err := strconv.Atoi(operand2)
-
-		if err == nil && num == 0 {
-			panic("деление на ноль недопустимо")
-
-		} else if err == nil && len(operand1)%num != 0 {
-			panic("строка не делится на целое число")
-
-		} else if err == nil {
-			result := operand1[:len(operand1)/num]
-			fmt.Printf("\"%s\"", result)
-
-		} else {
-			panic("при делении строки второй операнд должен быть числом")
+		if err != nil {
+			panic("Ошибка: при делении строки второй операнд должен быть числом")
 		}
+		if num == 0 {
+			panic("Ошибка: деление на ноль недопустимо")
+		}
+		if len(operand1)%num != 0 {
+			panic("Ошибка: строка не делится на целое число")
+		}
+		result = operand1[:len(operand1)/num]
+
+	default:
+		panic("используйте один из следующих операторов: +, -, *, /")
 	}
+
+	return result
+
 }
 
 func strChoper(line string) ([]string, string) {
