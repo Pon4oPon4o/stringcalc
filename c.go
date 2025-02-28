@@ -39,7 +39,7 @@ func main() {
 		result = result[:40] + "..."
 		fmt.Printf("\"%s\"", result)
 	} else {
-		fmt.Printgit add .f("\"%s\"", result)
+		fmt.Printf("\"%s\"", result)
 	}
 
 }
